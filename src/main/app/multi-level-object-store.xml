@@ -20,12 +20,13 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	<ee:object-store-caching-strategy
 		name="Caching_Strategy" doc:name="Caching Strategy"
 		keyGenerationExpression="#[message.inboundProperties['http.query.params'].key]">
-
 		<custom-object-store class="com.mulesoft.SecondLevelObjectStore">
 			<spring:property name="firstLevel" ref="inMemoryStore1" />
 			<spring:property name="secondLevel" ref="inMemoryStore2" />
 		</custom-object-store>
 	</ee:object-store-caching-strategy>
+	
+	
 	<flow name="multi-level-object-storeFlow">
 		<http:listener config-ref="HTTP_Listener_Configuration"
 			path="/" doc:name="HTTP" />
