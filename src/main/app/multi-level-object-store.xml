@@ -10,21 +10,21 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<http:listener-config name="HTTP_Listener_Configuration"
 		host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration" />
-    <spring:beans>
-        <spring:bean name="inMemoryStore1" class="org.mule.util.store.InMemoryObjectStore"/>
-        <spring:bean name="inMemoryStore2" class="org.mule.util.store.InMemoryObjectStore"/>
-    </spring:beans>
+	<spring:beans>
+		<spring:bean name="inMemoryStore1"
+			class="org.mule.util.store.InMemoryObjectStore" />
+		<spring:bean name="inMemoryStore2"
+			class="org.mule.util.store.InMemoryObjectStore" />
+	</spring:beans>
 
 	<ee:object-store-caching-strategy
 		name="Caching_Strategy" doc:name="Caching Strategy"
-		 keyGenerationExpression="#[message.inboundProperties['http.query.params'].key]">
-		
-<!-- 		<custom-object-store class="org.mule.util.store.InMemoryObjectStore"/>
- -->		
-  <custom-object-store class="com.mulesoft.SecondLevelObjectStore">
+		keyGenerationExpression="#[message.inboundProperties['http.query.params'].key]">
+
+		<custom-object-store class="com.mulesoft.SecondLevelObjectStore">
 			<spring:property name="firstLevel" ref="inMemoryStore1" />
 			<spring:property name="secondLevel" ref="inMemoryStore2" />
-		</custom-object-store> 
+		</custom-object-store>
 	</ee:object-store-caching-strategy>
 	<flow name="multi-level-object-storeFlow">
 		<http:listener config-ref="HTTP_Listener_Configuration"
